@@ -1,40 +1,28 @@
 from random import randint
 
-def startingData():
-    #print()
-    boxStringTupleList = []
-    nextList = []
-    number = 0
-    for l in range(5):
-        for m in range(5):
-            boxStringTupleList.append((number, str(l) + str(m)))
-            number +=1
-    if (len(boxStringTupleList) != 25):
-        print('length of boxStringTupleList = {}'.format(len(boxStringTupleList)))
-              
-    #print(boxStringTupleList)
-    #return finalList
+def squares(rows):
+    sqList = []
+    n = 0
+    for l in range(rows):
+        for m in range(rows):
+            sqList.append((n, str(l) + str(m)))
+            n +=1
+    return sqList
+  
+#print(squares(5))
 
-    # make the square numbers random so we can add the random bin and hex values
-
-
-    #print()
+def shuffle(l):
     count = 0
-    randomBoxStringTupleList = []
-    for i in range(0, (len(boxStringTupleList))):
-        number = randint(0, (len(boxStringTupleList)-1))
-        randomBoxStringTupleList.append(boxStringTupleList.pop(number))
+    randomList = []
+    for i in range(0, (len(l))):
+        number = randint(0, (len(l)-1))
+        randomList.append(l.pop(number))
         count +=1
-    if len(randomBoxStringTupleList) != 25:
-        print('length of randomBoxStringTupleList = {}'.format(len(randomBoxStringTupleList)))
+    return randomList
 
+randomBoxStringTupleList = shuffle(squares(5))
 
-    ##print('randomBoxStringTupleList = {}'.format(randomBoxStringTupleList))
-    ##print('length of RBSTL is {}'.format(len(randomBoxStringTupleList)))
-
-        
-    #def listCreator():
-        # create possible entries for square
+def binHexNums():
     hexList = []
     binList = []
     binHexList = []
@@ -64,7 +52,7 @@ def startingData():
             else:
                 num = 16*int(secondDigit[j])
             number = num + i
-            #print('binNumber = {}, secondDigit = {}'.format(bin(number), secondDigit[j]))
+     
             if secondDigit[j] == '0':
                 binString = bin(number)
                 while len(binString) != 6:
@@ -77,15 +65,11 @@ def startingData():
             aList.append([hexList[j*16 + i], binList[j* 16 + i], number])
             binHexList.append(aList[count])
             count +=1
-    #print(binHexList) # this is an ordered sorted list
-
     #pick twelve pairs for the board
     nextList = []
     for i in range(12):
         randNumber = randint(0, (len(binHexList)-1))
         nextList.append(binHexList.pop(randNumber))
-    ##print('nextList = {}'.format(nextList)) # nextList has 12 bin hex pairs
-    ##print('length of nextList = {}'.format(len(nextList)))
 
     # now add WildCard
     wildCardNum = randint(0, 23)
@@ -94,29 +78,15 @@ def startingData():
     done = 0
     for i in range(12):
         if i == int(wildCardNum/2) and done == 0 or i == (int(wildCardNum/2) + 1) and done == 0:
-            finalTupleList.append((randomBoxStringTupleList[counter][0], randomBoxStringTupleList[counter][1], 'Wild\nCard', 1000))
-            ##        print('wildCardNum = {}'.format(wildCardNum))
-            ##        print('wild = {}'.format(finalTupleList[counter]))
+            finalTupleList.append((randomBoxStringTupleList[counter][0], randomBoxStringTupleList[counter][1], 'Wild Card', 1000))
+        
             counter +=1
             done = 1
         finalTupleList.append((randomBoxStringTupleList[counter][0], randomBoxStringTupleList[counter][1], nextList[i][0], nextList[i][2]))
         counter +=1
         finalTupleList.append((randomBoxStringTupleList[counter][0], randomBoxStringTupleList[counter][1], nextList[i][1], nextList[i][2]))
         counter +=1
-    #    print('i = {}'.format(i))
-    ##    print('counter = {}'.format(counter))
-    ##    print('length of finalTupleList = {}'.format(len(finalTupleList)))
     finalTupleList.sort()
-    #print(finalTupleList)
     return finalTupleList
-
-'''
-
-for f in range(100):
-    tupleList,  wildCardNum = startingData()
-    if (len(tupleList) != 25):
-        print('length of startingData = {} wildCardNum = {}'.format(len(tupleList), wildCardNum))
-        print('list = {}'.format(tupleList))
-    
-    print('wildCardNum = {}'.format(wildCardNum), end='')
-'''
+          
+print(binHexNums())
