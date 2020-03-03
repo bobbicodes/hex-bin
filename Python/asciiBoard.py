@@ -1,7 +1,9 @@
-def lineSeg(w):
-    return w*"-"
+def repeat(x, n):
+    return n*x
 
-def span(w, n):
-    return '+'+'+'.join([lineSeg(w) for i in range(n)])+'+'
+def row(middle, divider, width, squares):
+    return divider+divider.join([repeat(middle, width) for i in range(squares)])+divider
 
-print(span(12, 5))
+print(row("-", "+", 12, 5))
+print(row("X", "|", 12, 5))
+print(row("X", "|", 12, 5))
