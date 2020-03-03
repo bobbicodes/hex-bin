@@ -88,5 +88,3 @@ def binHexNums():
         counter +=1
     finalTupleList.sort()
     return finalTupleList
-          
-print(binHexNums())
